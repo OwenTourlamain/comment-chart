@@ -5,7 +5,7 @@ import CommentBox from './components/CommentBox'
 
 function App() {
   return (
-    <div className='.container'>
+    <div className='container'>
       <Header />
       <ChartBox />
       <CommentBox />

@@ -1,15 +1,19 @@
 .container {
   text-align: center;
+  width: fit-content;
+  margin: auto;
+  margin-top: 3em;
+  border: 2px solid black;
 }
 
 .header {
-
+  padding: 1em;
 }
 
 .chartBox {
-
+  padding: 1em;
 }
 
 .commentBox {
-
+  padding: 1em;
 }
