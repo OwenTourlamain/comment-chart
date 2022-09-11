@@ -1,7 +1,7 @@
 const Header = () => {
   return (
     <div className="header">
-        Header
+        <h1>Line Chart With Comments</h1>
     </div>
   )
 }
