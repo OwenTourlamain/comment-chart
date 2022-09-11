@@ -1,7 +1,20 @@
-const ChartBox = () => {
+type Props = {
+    data: {
+        x: number;
+        y: number;
+        id: number;
+    }[]
+}
+
+const ChartBox = ({ data }: Props) => {
   return (
     <div className="chartBox">
-        ChartBox
+        <p>
+            {data.map((d) => (
+                <p>{d.x}, {d.y}</p>
+            ))}
+
+        </p>
     </div>
   )
 }
