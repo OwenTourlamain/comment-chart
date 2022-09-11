@@ -3,21 +3,33 @@ import Header from './components/Header'
 import ChartBox from './components/ChartBox'
 import CommentBox from './components/CommentBox'
 
+type DataPoint = {
+  x: number,
+  y: number,
+}
+
+type Series = {
+  label: string,
+  data: DataPoint[]
+}
+
 function App() {
-  function getData() {
-    const data = [];
+  function getData(): Series[] {
+    const series: Series = {
+      label: "Test Data",
+      data: []
+    }
 
     for (let i = 0; i < 15; i++) {
-      data.push(
+      series.data.push(
         {
           x: i,
-          y: Math.floor(Math.random() * 100) + 1,
-          id: i,
+          y: Math.floor(Math.random() * 100) + 1
         }
       )
     }
 
-    return data;
+    return [series];
   }
 
   const data = getData();
@@ -25,7 +37,7 @@ function App() {
   return (
     <div className='container'>
       <Header />
-      <ChartBox data={data}/>
+      <ChartBox data={data} />
       <CommentBox />
     </div>
   );

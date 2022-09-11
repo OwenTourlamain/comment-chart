@@ -12,7 +12,8 @@
 }
 
 .chartBox {
-  padding: 1em;
+  height: 400px;
+  width: 600px;
 }
 
 .commentBox {
