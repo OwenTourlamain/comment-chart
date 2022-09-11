@@ -33,12 +33,26 @@ function App() {
   }
 
   const data = getData();
+  const comments = [
+    {
+      username: "Dave",
+      text: "Nice data!"
+    },
+    {
+      username: "Sally",
+      text: "Good work everyone"
+    },
+    {
+      username: "Mike",
+      text: "This is concerning"
+    },
+  ]
 
   return (
     <div className='container'>
       <Header />
       <ChartBox data={data} />
-      <CommentBox />
+      <CommentBox comments={comments}/>
     </div>
   );
 }
