@@ -15,7 +15,7 @@ type Series = {
   data: DataPoint[]
 }
 
-type Comment = {
+type CommentType = {
   username: string,
   text: string,
   id: number,
@@ -42,7 +42,7 @@ function App() {
     return [series];
   }
 
-  function getComments(): Comment[] {
+  function getComments(): CommentType[] {
     return [
       {
         username: "Dave",
@@ -65,20 +65,31 @@ function App() {
     ]
   }
 
-  function addComment(username: string, text: string, datapoint: number): void {
+  function addComment(username: string, text: string): void {
     const id = Math.floor(Math.random() * 10000) + 1
-    const newComment = { username, text, id, datapoint }
+    const newComment = { 
+      username: username,
+      text: text, 
+      id: id, 
+      datapoint: selectedID 
+    }
+    console.log(newComment)
     setComments([...comments, newComment])
   }
 
-  const [data, setData] = useState<DataPoint | any>(getData())
-  const [comments, setComments] = useState<Comment | any>(getComments())
+  function selectDataPoint(id: number) {
+    setSelectedID(id)
+  }
+
+  const [data] = useState<DataPoint | any>(getData())
+  const [comments, setComments] = useState<CommentType | any>(getComments())
+  const [selectedID, setSelectedID] = useState(-1)
 
   return (
     <div className='container'>
       <Header />
-      <ChartBox data={data} />
-      <CommentBox comments={comments} selectedID={1} isSelected={true} onAddComment={addComment}
+      <ChartBox data={data} onClick={selectDataPoint}/>
+      <CommentBox comments={comments} selectedID={selectedID} onAddComment={addComment}
         />
     </div>
   );

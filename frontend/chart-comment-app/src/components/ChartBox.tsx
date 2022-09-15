@@ -2,7 +2,8 @@ import React from 'react'
 import { AxisOptions, Chart } from 'react-charts'
  
 type Props = {
-    data: Series[]
+    data: Series[],
+    onClick: Function,
 }
 
 type Series = {
@@ -15,7 +16,7 @@ type DataPoint = {
     y: number,
   }
 
-const ChartBox = ({ data }: Props) => {
+const ChartBox = ({ data, onClick }: Props) => {
   
   const primaryAxis = React.useMemo(
     (): AxisOptions<DataPoint> => ({
@@ -36,12 +37,13 @@ const ChartBox = ({ data }: Props) => {
   return (
     <div className='chartBox'>
         <Chart
-      options={{
-        data,
-        primaryAxis,
-        secondaryAxes,
-      }}
-    />
+            options={{
+                data,
+                primaryAxis,
+                secondaryAxes, 
+                onClickDatum: (datum) => {onClick(datum?.index)},
+            }}
+        />
     </div>
   )
 }

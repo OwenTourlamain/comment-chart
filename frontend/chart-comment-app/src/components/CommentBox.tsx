@@ -2,35 +2,34 @@ import AddComment from './AddComment'
 import Comment from './Comment'
 
 type Props = {
-    comments: Comment[],
-    isSelected: boolean,
+    comments: CommentType[],
     selectedID: number,
     onAddComment: Function,
 }
 
-type Comment = {
+type CommentType = {
     username: string,
     text: string,
     id: number,
-
+    datapoint: number
 }
 
-const CommentBox = ({ comments, selectedID, isSelected, onAddComment }: Props) => {
+const CommentBox = ({ comments, selectedID, onAddComment }: Props) => {
 
-    function renderComments(comments: Comment[]) {
+    function renderComments(comments: CommentType[]) {
         return (
             <>
-                {comments.map((comment) => (
+                {comments.filter((comment) => comment.datapoint === selectedID).map((comment) => (
                     <Comment key={comment.id} username={comment.username} text={comment.text}/>
                 ))}
-                <AddComment onAddComment={onAddComment} selectedID={selectedID}/>
+                <AddComment onAddComment={onAddComment}/>
             </>
         )
     }
 
     return (
         <div className="commentBox">
-            {isSelected ? // have we clicked on a data point?
+            {selectedID >= 0 ? // have we clicked on a data point?
                 renderComments(comments)
             :
                 <h3>Select a data point to see comments</h3>

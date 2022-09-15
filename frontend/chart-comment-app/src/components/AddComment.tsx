@@ -2,10 +2,9 @@ import { useState } from 'react'
 
 type Props = {
     onAddComment: Function;
-    selectedID: number;
 }
 
-const AddComment = ({ onAddComment, selectedID }: Props) => {
+const AddComment = ({ onAddComment }: Props) => {
 
     const [username, setUsername] = useState('');
     const [text, setText] = useState('');
@@ -18,7 +17,7 @@ const AddComment = ({ onAddComment, selectedID }: Props) => {
             return
         }
 
-        onAddComment(username, text, selectedID)
+        onAddComment(username, text)
 
         setUsername('')
         setText('')
