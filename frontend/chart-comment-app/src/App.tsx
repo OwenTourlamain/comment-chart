@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './App.css';
 import Header from './components/Header'
 import ChartBox from './components/ChartBox'
@@ -64,14 +65,14 @@ function App() {
     ]
   }
 
-  function addComment(username: string, text: string): void {
-    console.log(username)
-    console.log(text)
-
+  function addComment(username: string, text: string, datapoint: number): void {
+    const id = Math.floor(Math.random() * 10000) + 1
+    const newComment = { username, text, id, datapoint }
+    setComments([...comments, newComment])
   }
 
-  const data = getData();
-  const comments = getComments();
+  const [data, setData] = useState<DataPoint | any>(getData())
+  const [comments, setComments] = useState<Comment | any>(getComments())
 
   return (
     <div className='container'>

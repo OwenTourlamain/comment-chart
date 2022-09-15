@@ -1,10 +1,11 @@
 import { useState } from 'react'
 
 type Props = {
-    onAddComment: Function
+    onAddComment: Function;
+    selectedID: number;
 }
 
-const AddComment = ({ onAddComment }: Props) => {
+const AddComment = ({ onAddComment, selectedID }: Props) => {
 
     const [username, setUsername] = useState('');
     const [text, setText] = useState('');
@@ -12,12 +13,12 @@ const AddComment = ({ onAddComment }: Props) => {
     const onSubmit = (e: any) => {
         e.preventDefault()
 
-        if(!username) {
-            alert('Please add a task')
+        if(!username || !text) {
+            alert('Please complete all fields')
             return
         }
 
-        onAddComment(username, text)
+        onAddComment(username, text, selectedID)
 
         setUsername('')
         setText('')

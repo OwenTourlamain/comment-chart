@@ -23,7 +23,7 @@ const CommentBox = ({ comments, selectedID, isSelected, onAddComment }: Props) =
                 {comments.map((comment) => (
                     <Comment key={comment.id} username={comment.username} text={comment.text}/>
                 ))}
-                <AddComment onAddComment={onAddComment}/>
+                <AddComment onAddComment={onAddComment} selectedID={selectedID}/>
             </>
         )
     }
