@@ -17,6 +17,10 @@
   padding: 2em;
 }
 
+.chartDot:hover {
+  cursor: pointer;
+}
+
 .closeButton {
   border: none;
   font-weight: bold;
