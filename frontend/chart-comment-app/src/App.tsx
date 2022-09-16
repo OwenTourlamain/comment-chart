@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css';
 import Header from './components/Header'
 import ChartBox from './components/ChartBox'
@@ -26,7 +26,7 @@ function App() {
         {
           x: i,
           y: Math.floor(Math.random() * 100) + 1,
-          commentCount: 3,
+          commentCount: -1,
         }
       )
     }
@@ -65,17 +65,33 @@ function App() {
       id: id, 
       datapoint: selectedID 
     }
-    console.log(newComment)
     setComments([...comments, newComment])
+  }
+
+  function updateCommentCounts() {
+    setData(data.map(
+      (datum) => (
+        { 
+          x: datum.x, 
+          y: datum.y, 
+          commentCount: comments.filter((comment: CommentType) => comment.datapoint === datum.x).length
+        }
+      )
+    ))
   }
 
   function selectDataPoint(id: number) {
     setSelectedID(id)
   }
 
-  const [data] = useState<DataPoint[]>(getData())
+  const [data, setData] = useState<DataPoint[]>(getData())
   const [comments, setComments] = useState<CommentType | any>(getComments())
   const [selectedID, setSelectedID] = useState(-1)
+
+  useEffect(
+    updateCommentCounts,
+    [comments]
+  )
 
   return (
     <div className='container'>
