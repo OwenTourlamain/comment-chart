@@ -5,6 +5,7 @@ type Props = {
     comments: CommentType[],
     selectedID: number,
     onAddComment: Function,
+    onCloseClick: Function,
 }
 
 type CommentType = {
@@ -14,11 +15,15 @@ type CommentType = {
     datapoint: number
 }
 
-const CommentBox = ({ comments, selectedID, onAddComment }: Props) => {
+const CommentBox = ({ comments, selectedID, onAddComment, onCloseClick }: Props) => {
 
     function renderComments(comments: CommentType[]) {
         return (
             <>
+                <div className='commentHeader'>
+                    <h3>Showing comments for data point {selectedID}:</h3>
+                    <button className='closeButton' onClick={() => onCloseClick(-1)}>Close</button>
+                </div>
                 {comments.filter((comment) => comment.datapoint === selectedID).map((comment) => (
                     <Comment key={comment.id} username={comment.username} text={comment.text}/>
                 ))}

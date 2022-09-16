@@ -7,12 +7,7 @@ import CommentBox from './components/CommentBox'
 type DataPoint = {
   x: number,
   y: number,
-  id: number
-}
-
-type Series = {
-  label: string,
-  data: DataPoint[]
+  commentCount: number
 }
 
 type CommentType = {
@@ -23,23 +18,20 @@ type CommentType = {
 }
 
 function App() {
-  function getData(): Series[] {
-    const series: Series = {
-      label: "Test Data",
-      data: []
-    }
+  function getData(): DataPoint[] {
+    const data: DataPoint[] = []
 
     for (let i = 0; i < 15; i++) {
-      series.data.push(
+      data.push(
         {
           x: i,
           y: Math.floor(Math.random() * 100) + 1,
-          id: i
+          commentCount: 3,
         }
       )
     }
 
-    return [series];
+    return data;
   }
 
   function getComments(): CommentType[] {
@@ -81,16 +73,20 @@ function App() {
     setSelectedID(id)
   }
 
-  const [data] = useState<DataPoint | any>(getData())
+  const [data] = useState<DataPoint[]>(getData())
   const [comments, setComments] = useState<CommentType | any>(getComments())
   const [selectedID, setSelectedID] = useState(-1)
 
   return (
     <div className='container'>
       <Header />
-      <ChartBox data={data} onClick={selectDataPoint}/>
-      <CommentBox comments={comments} selectedID={selectedID} onAddComment={addComment}
-        />
+      <ChartBox data={data} onClick={selectDataPoint} />
+      <CommentBox 
+        comments={comments} 
+        selectedID={selectedID} 
+        onAddComment={addComment} 
+        onCloseClick={setSelectedID}
+      />
     </div>
   );
 }

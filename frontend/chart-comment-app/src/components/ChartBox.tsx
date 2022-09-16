@@ -1,51 +1,29 @@
-import React from 'react'
-import { AxisOptions, Chart } from 'react-charts'
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Label } from 'recharts';
  
 type Props = {
-    data: Series[],
-    onClick: Function,
-}
-
-type Series = {
-    label: string,
     data: DataPoint[],
+    onClick: Function,
 }
 
 type DataPoint = {
     x: number,
     y: number,
+    commentCount: number
   }
 
 const ChartBox = ({ data, onClick }: Props) => {
-  
-  const primaryAxis = React.useMemo(
-    (): AxisOptions<DataPoint> => ({
-      getValue: datum => datum.x,
-    }),
-    []
-  )
-
-  const secondaryAxes = React.useMemo(
-    (): AxisOptions<DataPoint>[] => [
-      {
-        getValue: datum => datum.y,
-      },
-    ],
-    []
-  )
-
-  return (
-    <div className='chartBox'>
-        <Chart
-            options={{
-                data,
-                primaryAxis,
-                secondaryAxes, 
-                onClickDatum: (datum) => {onClick(datum?.index)},
-            }}
-        />
-    </div>
-  )
+    return (
+        <div className='chartBox'>
+            <ResponsiveContainer width="90%">
+                <LineChart data={data} onClick={(e) => onClick(e.activeLabel)} >
+                    <Line type={"monotone"} dataKey={"y"} stroke={"#8884d8"} />
+                    <XAxis dataKey={"x"} />
+                    <YAxis dataKey={"y"} />
+                    <Label value="Test" />
+                </LineChart>
+            </ResponsiveContainer>
+        </div>
+    )
 }
 
 export default ChartBox

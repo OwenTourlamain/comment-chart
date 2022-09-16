@@ -14,6 +14,32 @@
 .chartBox {
   height: 400px;
   width: 600px;
+  padding: 2em;
+}
+
+.closeButton {
+  border: none;
+  font-weight: bold;
+  display: inline-block;
+  background-color: transparent;
+  flex-grow: 0;
+  padding: 0.5em;
+  margin: 0.5em;
+  border-radius: 5px;
+}
+
+.closeButton:hover {
+  background-color: red;
+  color: white;
+  cursor: pointer;
+}
+
+.commentHeader {
+  display: flex
+}
+
+.commentHeader h3 {
+  flex-grow: 1;
 }
 
 .comment {
