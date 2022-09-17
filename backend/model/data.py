@@ -80,7 +80,10 @@ class DB():
         return ret
 
     def add_comment(self, new_comment):
+        res = self.conn.execute(f"SELECT commentCount FROM datapoint WHERE x={new_comment.datapoint}")
+        new_count = res.fetchall()[0][0] + 1
         cur = self.conn.cursor()
+        cur
         cur.execute(f"""
             INSERT INTO comment VALUES
                 (
@@ -89,5 +92,10 @@ class DB():
                     "{new_comment.text}", 
                     {new_comment.datapoint}
                 )
+        """)
+        cur.execute(f"""
+            UPDATE datapoint
+            SET commentCount={new_count}
+            WHERE x={new_comment.datapoint}
         """)
         self.conn.commit()

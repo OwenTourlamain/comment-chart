@@ -32,8 +32,10 @@ def test_add_comment():
     new_comment = Comment(6, "Lucy", "New comment!", 8)
     db.add_comment(new_comment)
     comments = db.get_comments()
+    data = db.get_data()
     assert len(comments) == 6
     assert comments[5] == new_comment
+    assert data[7].comment_count == 1
 
 def test_initialise_db():
     db = DB()
