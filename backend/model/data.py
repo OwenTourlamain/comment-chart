@@ -78,3 +78,16 @@ class DB():
         for item in res.fetchall():
             ret.append(Comment(item[0], item[1], item[2], item[3]))
         return ret
+
+    def add_comment(self, new_comment):
+        cur = self.conn.cursor()
+        cur.execute(f"""
+            INSERT INTO comment VALUES
+                (
+                    {new_comment.id}, 
+                    "{new_comment.username}", 
+                    "{new_comment.text}", 
+                    {new_comment.datapoint}
+                )
+        """)
+        self.conn.commit()
