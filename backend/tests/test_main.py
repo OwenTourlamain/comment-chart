@@ -7,7 +7,7 @@ def test_get_data():
     response = client.get("/data")
     assert response.status_code == 200
     assert response.json() == {
-        [
+        "datapoints": [
             {
                 "x": 1, 
                 "y": 2, 
@@ -16,7 +16,7 @@ def test_get_data():
             {
                 "x": 2, 
                 "y": 3, 
-                "comment_count": 0
+                "comment_count": 3
             },
             {
                 "x": 3, 
@@ -31,7 +31,7 @@ def test_get_data():
             {
                 "x": 5, 
                 "y": 8, 
-                "comment_count": 0
+                "comment_count": 1
             },
             {
                 "x": 6, 
@@ -41,7 +41,7 @@ def test_get_data():
             {
                 "x": 7, 
                 "y": 3, 
-                "comment_count": 0
+                "comment_count": 1
             },
             {
                 "x": 8, 
@@ -65,7 +65,7 @@ def test_get_comments():
     response = client.get("/comments")
     assert response.status_code == 200
     assert response.json() == {
-        [
+        "comments": [
             {
                 "id": 1, 
                 "username": "Dave", 
@@ -102,14 +102,21 @@ def test_get_comments():
 def test_add_comment():
     response = client.post(
         "/comments/add/",
-        json={"id": 6, "username": "Lucy", "text": "New comment!", "datapoint": 8}
+        json = {
+            "id": 6, 
+            "username": "Lucy", 
+            "text": "New comment!", 
+            "datapoint": 8
+        }
     )
     assert response.status_code == 200
-    assert response.json == {
-        "id": 6, 
-        "username": "Lucy", 
-        "text": "New comment!", 
-        "datapoint": 8
+    assert response.json() == {
+        "comment": {
+            "id": 6, 
+            "username": "Lucy", 
+            "text": "New comment!", 
+            "datapoint": 8
+        }
     }
 
 def test_add_comment_invalid():
@@ -117,5 +124,4 @@ def test_add_comment_invalid():
         "/comments/add/",
         json={"username": "Lucy", "text": "New comment!", "datapoint": 8}
     )
-    assert response.status_code == 400
-    assert response.json() == {"detail": "invalid POST data format"}
+    assert response.status_code == 422

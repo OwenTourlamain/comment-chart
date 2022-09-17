@@ -38,7 +38,7 @@ class Comment():
 class DB():
 
     def __init__(self):
-        self.conn = sqlite3.connect(":memory:")
+        self.conn = sqlite3.connect(":memory:", check_same_thread=False)
         cur = self.conn.cursor()
         cur.execute("CREATE TABLE datapoint(x, y, commentCount)")
         cur.execute("CREATE TABLE comment(id, username, text, datapoint)")
