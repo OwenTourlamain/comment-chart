@@ -5,12 +5,12 @@ def test_get_data():
     data = db.get_data()
     assert data == [
         DataPoint(1, 2, 0),
-        DataPoint(2, 3, 0),
+        DataPoint(2, 3, 3),
         DataPoint(3, 4, 0),
         DataPoint(4, 6, 0),
-        DataPoint(5, 8, 0),
+        DataPoint(5, 8, 1),
         DataPoint(6, 5, 0),
-        DataPoint(7, 3, 0),
+        DataPoint(7, 3, 1),
         DataPoint(8, 6, 0),
         DataPoint(9, 7, 0),
         DataPoint(10, 9, 0)
