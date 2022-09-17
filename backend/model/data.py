@@ -93,9 +93,5 @@ class DB():
                     {new_comment.datapoint}
                 )
         """)
-        cur.execute(f"""
-            UPDATE datapoint
-            SET commentCount={new_count}
-            WHERE x={new_comment.datapoint}
-        """)
+        cur.execute(f"UPDATE datapoint SET commentCount={new_count} WHERE x={new_comment.datapoint}")
         self.conn.commit()
