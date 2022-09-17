@@ -1,18 +1,12 @@
 import AddComment from './AddComment'
 import Comment from './Comment'
+import { CommentType } from './Types'
 
 type Props = {
     comments: CommentType[],
     selectedID: number,
     onAddComment: Function,
     onCloseClick: Function,
-}
-
-type CommentType = {
-    username: string,
-    text: string,
-    id: number,
-    datapoint: number
 }
 
 const CommentBox = ({ comments, selectedID, onAddComment, onCloseClick }: Props) => {

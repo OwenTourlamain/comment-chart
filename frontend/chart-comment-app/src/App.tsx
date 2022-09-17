@@ -3,19 +3,7 @@ import './App.css';
 import Header from './components/Header'
 import ChartBox from './components/ChartBox'
 import CommentBox from './components/CommentBox'
-
-type DataPoint = {
-  x: number,
-  y: number,
-  commentCount: number
-}
-
-type CommentType = {
-  username: string,
-  text: string,
-  id: number,
-  datapoint: number
-}
+import { DataPoint, CommentType } from './components/Types'
 
 function App() {
   function getData(): DataPoint[] {

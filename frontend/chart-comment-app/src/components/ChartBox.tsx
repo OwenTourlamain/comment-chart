@@ -1,15 +1,10 @@
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Label } from 'recharts';
+import { DataPoint } from './Types'
  
 type Props = {
     data: DataPoint[],
     onClick: Function,
 }
-
-type DataPoint = {
-    x: number,
-    y: number,
-    commentCount: number
-  }
 
 const ChartBox = ({ data, onClick }: Props) => {
     function renderDot(props: any) {
