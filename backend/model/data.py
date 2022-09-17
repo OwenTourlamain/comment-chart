@@ -17,7 +17,23 @@ class DataPoint():
         )
 
 class Comment():
-    pass
+    
+    def __init__(self, id, username, text, datapoint):
+        self.id = id
+        self.username = username
+        self.text = text
+        self.datapoint = datapoint
+
+    def __eq__(self, other):
+        return (
+            self.id == other.id 
+        and
+            self.username == other.username 
+        and
+            self.text == other.text
+        and
+            self.datapoint == other.datapoint
+        )
 
 class DB():
 
@@ -54,4 +70,11 @@ class DB():
         ret = []
         for item in res.fetchall():
             ret.append(DataPoint(item[0], item[1], item[2]))
+        return ret
+
+    def get_comments(self):
+        res = self.conn.execute("SELECT * FROM comment")
+        ret = []
+        for item in res.fetchall():
+            ret.append(Comment(item[0], item[1], item[2], item[3]))
         return ret
