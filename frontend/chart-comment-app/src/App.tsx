@@ -27,18 +27,6 @@ function App() {
       .catch((err) => console.log('error'))
   }
 
-  function updateCommentCounts() {
-    setData(data.map(
-      (datum) => (
-        { 
-          x: datum.x, 
-          y: datum.y, 
-          commentCount: comments.filter((comment: CommentType) => comment.datapoint === datum.x).length
-        }
-      )
-    ))
-  }
-
   function selectDataPoint(id: number) {
     setSelectedID(id)
   }
