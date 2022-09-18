@@ -6,44 +6,6 @@ import CommentBox from './components/CommentBox'
 import { DataPoint, CommentType } from './components/Types'
 
 function App() {
-  function getData(): DataPoint[] {
-    const data: DataPoint[] = []
-
-    for (let i = 0; i < 15; i++) {
-      data.push(
-        {
-          x: i,
-          y: Math.floor(Math.random() * 100) + 1,
-          commentCount: -1,
-        }
-      )
-    }
-
-    return data;
-  }
-
-  function getComments(): CommentType[] {
-    return [
-      {
-        username: "Dave",
-        text: "Nice data!",
-        id: 1,
-        datapoint: 1,
-      },
-      {
-        username: "Sally",
-        text: "Good work everyone",
-        id: 2,
-        datapoint: 1,
-      },
-      {
-        username: "Mike",
-        text: "This is concerning",
-        id: 3,
-        datapoint: 4,
-      },
-    ]
-  }
 
   function addComment(username: string, text: string): void {
     const id = Math.floor(Math.random() * 10000) + 1
@@ -54,6 +16,15 @@ function App() {
       datapoint: selectedID 
     }
     setComments([...comments, newComment])
+    fetch('http://localhost:8000/comments/add/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newComment),
+    })
+      .then((res) => res.json())
+      .catch((err) => console.log('error'))
   }
 
   function updateCommentCounts() {
@@ -72,12 +43,55 @@ function App() {
     setSelectedID(id)
   }
 
-  const [data, setData] = useState<DataPoint[]>(getData())
-  const [comments, setComments] = useState<CommentType | any>(getComments())
+  const [data, setData] = useState<DataPoint[]>([])
+  const [comments, setComments] = useState<CommentType | any>([])
   const [selectedID, setSelectedID] = useState(-1)
 
+  useEffect(() => {
+    fetch('http://localhost:8000/data/')
+       .then((response) => response.json())
+       .then((json) => {
+          setData(json.datapoints.map((d: any) => (
+            { 
+              x: d.x, 
+              y: d.y, 
+              commentCount: d.comment_count 
+            }
+        )));
+       })
+       .catch((err) => {
+          console.log(err.message);
+       });
+  }, []);
+
+  useEffect(() => {
+    fetch('http://localhost:8000/comments/')
+       .then((response) => response.json())
+       .then((json) => {
+          setComments(json.comments.map((d: any) => (
+            { 
+              id: d.id, 
+              username: d.username, 
+              text: d.text,
+              datapoint: d.datapoint
+            }
+        )));
+       })
+       .catch((err) => {
+          console.log(err.message);
+       });
+  }, []);
+
   useEffect(
-    updateCommentCounts,
+    () => setData(data.map(
+      (datum) => (
+        { 
+          x: datum.x, 
+          y: datum.y, 
+          commentCount: comments.filter((comment: CommentType) => comment.datapoint === datum.x).length
+        }
+      )
+    )),
     [comments]
   )
 
